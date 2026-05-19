@@ -16,7 +16,7 @@ class App
                 unset($urlProcess[0]);
             }
         }
-        require_once '../app/controller/'.$this->controller.'.php';
+        require_once '../app/controllers/'.$this->controller.'.php';
         $this->controller = new $this->controller;
         if(isset($urlProcess[1])){
             if(method_exists($this->controller,$urlProcess[1])){
