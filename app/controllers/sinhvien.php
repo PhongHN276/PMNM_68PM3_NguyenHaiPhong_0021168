@@ -1,45 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách sinh viên</title>
-</head>
-<body>
-    <h1>Danh sách sinh viên</h1>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+<?php
+class sinhvien extends Controller{
+    public function index(){
+    
+        $sinhvienModel = $this->model('sinhvienModel');
+        $sinhviens = $sinhvienModel->getAllSinhVien();
+             $this->view('layout/masterlayout', [
+            'danhSachSinhVien' => $sinhviens,
+            'viewname' => 'sinhvien/home/index',
+            'title' => 'Danh sách sinh viên'
+        ]);
+
+    }
+    public function create(){
+        require_once __DIR__ . '/../views/sinhvien/create.php';
+    }
+
+    public function store(){
+        
+        $hoten = $_POST['hoten'];
+        $gioitinh = $_POST['gioitinh'];
+        $mssv = $_POST['mssv'];
+        echo "Họ tên: " . $hoten . "<br>";
+        echo "Giới tính: " . $gioitinh . "<br>";
+        echo "Mã số sinh viên: " . $mssv . "<br>";
+        $result = $sinhvienModel = $this->model('sinhvienModel')->create($hoten, $gioitinh, $mssv);
+        if($result){
+            echo "Thêm sinh viên thành công!";
+        } else {
+            echo "Thêm sinh viên thất bại!";
         }
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: left;
-        }
-        th {
-            background-color: white;
-        }
-    </style>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>MSSV</th>
-                <th>Họ tên</th>
-                <th>Giới tính</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($sinhvien as $sv): ?>
-                <tr>
-                    <td><?php echo $sv['id']; ?></td>
-                    <td><?php echo $sv['MSSV']; ?></td>
-                    <td><?php echo $sv['HoTen']; ?></td>
-                    <td><?php echo $sv['GioiTinh']; ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
-</html>
+    }
+
+ 
+}
+
+?>
