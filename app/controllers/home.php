@@ -1,8 +1,8 @@
 ﻿<?php
 class home {
-    function index() {
-        echo "Đây là trang chủ";
+    public function index() {
         require_once '../app/views/home/index.php';
+        require_once '../app/views/layout/masterlayout.php';
     }
 
     public function login() {

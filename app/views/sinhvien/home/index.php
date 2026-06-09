@@ -3,78 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách sinh viên</title>
-  <style>
-  body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 80%;
-            margin: auto;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th {
-            background-color: #4f46e5;
-            color: white;
-            padding: 12px;
-        }
-
-        td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #eef2ff;
-            transition: 0.2s;
-        }
-    </style>
+    <title>Trang Sinh Viên</title>
 </head>
 <body>
     <h1>Danh sách sinh viên</h1>
-  <div style="text-align: center; margin-bottom: 20px;">
-        <a href="sinhvien/create" class="btn-add">Thêm Sinh Viên Mới</a>
-    </div>
-
-    <?php if (!empty($danhSachSinhVien)): ?>
-        <table border="1">
-            <thead>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+    </style>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Giới tính</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($sinhvien as $index => $sv): ?>
                 <tr>
-                    <?php foreach (array_keys($danhSachSinhVien[0]) as $column): ?>
-                        <th><?php echo ucfirst($column); ?></th>
-                    <?php endforeach; ?>
+                    <td><?php echo $index +1; ?></td>
+                    <td><?php echo $sv['MSSV']; ?></td>
+                    <td><?php echo $sv['HoTen']; ?></td>
+                    <td><?php echo $sv['GioiTinh']; ?></td>
+                    <td> 
+                        <a href = "/sinhvien/edit/<?php echo $sv['id']; ?>">Sửa</a>
+                        <a href = "/sinhvien/delete/<?php echo $sv['id']; ?>">Xoá</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($danhSachSinhVien as $sinhVien): ?>
-                    <tr>
-                        <?php foreach ($sinhVien as $value): ?>
-                            <td><?php echo htmlspecialchars($value); ?></td>
-                        <?php endforeach; ?>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>Không có dữ liệu sinh viên</p>
-    <?php endif; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div>
+        <?php
+            $pageSize = 5;
+            for($i =1; $i <= $totalPage; $i++){
+            $offset = ($i - 1) * $pageSize;
+            echo "<a class='btn btn-primary' href = '/sinhvien/index/$pageSize/$offset'> $i </a>";
+            }
+        ?>
+    </div>
 </body>
 </html>

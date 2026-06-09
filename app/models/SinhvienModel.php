@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../core/connectDB.php';
 
 class sinhvienModel {
@@ -23,5 +23,21 @@ class sinhvienModel {
         return $stmt->execute();
   
     }
+     public function paging ($limit = 5, $offset = 0, $search = ''){
+            $query = "SELECT * FROM sinhvien LIMIT :limit OFFSET :offset ";
+            $stmt = $this -> conn -> prepare($query);
+            $stmt -> bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt -> bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt -> execute();
+            $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+            
+            //Tính tổng số bản ghi
+            $selectAllQuery = $this->conn->query("SELECT COUNT(*) FROM sinhvien");
+            $totalRecord = $selectAllQuery -> fetchColumn();
+
+            $totalPage = ceil($totalRecord / $limit);
+            
+            return ['sinhvien' => $result, 'totalPage' => (int) $totalPage];
+        }
 }
 ?>
