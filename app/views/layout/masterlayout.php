@@ -13,7 +13,7 @@
 </head>
 <body>
     <div> <?php require_once '../app/views/layout/partial/header.php'; ?> </div>
-    <div class="content"></div>
+    <div class="content">
         <?php
             require_once '../app/views/' . $viewname . '.php';
         ?>

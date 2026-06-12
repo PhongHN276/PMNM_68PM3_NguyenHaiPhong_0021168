@@ -5,7 +5,8 @@ class Controller {
         return new $model();
     }
 
-    public function view($viewName, $data = []) {
+    public function view($viewName, $data = [], $title = '') {
+        $data['title'] = $title;
         extract($data);
         $viewname = $viewName;
         require_once '../app/views/layout/masterlayout.php';
