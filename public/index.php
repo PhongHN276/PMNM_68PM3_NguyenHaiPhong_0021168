@@ -1,6 +1,7 @@
 <?php
     $scriptName = $_SERVER['SCRIPT_NAME']; // e.g. /btvnpmnm/public/index.php
     $baseDir = dirname($scriptName); // e.g. /btvnpmnm/public
+    $baseDir = preg_replace('#[\\\/]public$#i', '', $baseDir);
     if ($baseDir === '/' || $baseDir === '\\') {
         $baseDir = '';
     }

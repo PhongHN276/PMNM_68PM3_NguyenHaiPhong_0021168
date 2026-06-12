@@ -25,6 +25,15 @@
             }
         }
         public function paging ($limit = 5, $offset = 0, $search = ''){
+            $limit = (int)$limit;
+            $offset = (int)$offset;
+            if ($limit <= 0) {
+                $limit = 5;
+            }
+            if ($offset < 0) {
+                $offset = 0;
+            }
+
             $query = "SELECT * FROM sinhvien LIMIT :limit OFFSET :offset ";
             $stmt = $this -> conn -> prepare($query);
             $stmt -> bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -62,7 +71,12 @@
                 return false;
             }
         }
-
+        public function delete($id) {
+            $query = "DELETE FROM sinhvien WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        }
     }
     
 ?>

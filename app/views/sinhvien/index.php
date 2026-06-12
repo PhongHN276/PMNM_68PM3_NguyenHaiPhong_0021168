@@ -76,7 +76,7 @@
         <h1>Danh sách sinh viên</h1>
         
         <a href="<?php echo url('/sinhvien/create'); ?>" class="btn btn-success">+ Thêm sinh viên mới</a>
-
+        <a href="<?php echo url('/auth/logout'); ?>" class="btn btn-danger" style="margin-bottom: 15px; margin-left: 10px;">Đăng xuất</a>
         <table>
             <thead>
                 <tr>
@@ -97,6 +97,7 @@
                         <td> 
                             <div class="action-btns">
                                 <a href="<?php echo url('/sinhvien/edit/' . $sv['id']); ?>" class="btn btn-warning">Sửa</a>
+                                <a href="<?php echo url('/sinhvien/delete/' . $sv['id']); ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này?');">Xoá</a>
                             </div>
                         </td>
                     </tr>
