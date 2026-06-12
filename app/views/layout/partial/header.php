@@ -1,18 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-    .header{
-        height: 100px;
-        width : 100%;
-        background-color: red;
-    }
+        .header {
+            width: 100%;
+            height: 80px;
+            background-color: red;
+            position: fixed;
+            top: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="header">đây là header</div>
+    <div class="header">
+        <p>Header</p>
+    </div>
 </body>
 </html>

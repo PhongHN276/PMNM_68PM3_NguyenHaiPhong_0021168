@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -97,7 +97,7 @@
 <body>
    <div class="form-container">
     <h2>Thêm Sinh Viên Mới</h2>
-    <form action="store" method="POST">
+    <form action="/sinhvien/store" method="POST">
         <div class="form-group">
             <label for="hoten">Họ và tên</label>
             <input type="text" name="hoten" id="hoten" placeholder="Nhập họ và tên sinh viên" required>
@@ -120,7 +120,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn-submit">Thêm sinh viên</button>
-            <a href="index" class="btn-cancel">Hủy bỏ</a>
+            <a href="/sinhvien/index" class="btn-cancel">Hủy bỏ</a>
         </div>
     </form>
 </div>

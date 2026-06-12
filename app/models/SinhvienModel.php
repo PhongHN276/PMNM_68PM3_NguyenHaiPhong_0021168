@@ -1,29 +1,30 @@
-﻿<?php
-require_once __DIR__ . '/../core/connectDB.php';
+<?php
+    require_once '../app/core/DB.php';
+    class sinhvienModel {
+        private $conn;
+        public function __construct() {
+            $this -> conn = ConnectDB::Connect();
+        }
 
-class sinhvienModel {
-    private $conn;
-    
-    public function __construct() {
-        $this->conn = connectDB::Connect();
-    }   
-    
-    public function getAllSinhVien() {
-        $sql = "SELECT * FROM tbl_sinhvien";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function create($hoten, $gioitinh, $mssv) {
-        $sql = "INSERT INTO tbl_sinhvien (hoten, gioitinh, mssv) VALUES (:hoten, :gioitinh, :mssv)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':hoten', $hoten);
-        $stmt->bindParam(':gioitinh', $gioitinh);
-        $stmt->bindParam(':mssv', $mssv);
-        return $stmt->execute();
-  
-    }
-     public function paging ($limit = 5, $offset = 0, $search = ''){
+        public function getAllSinhvien() {
+            $query = "SELECT * FROM sinhvien";
+            $stmt = $this -> conn -> prepare($query);
+            $stmt -> execute();
+            return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+        }
+        public function create($HoTen, $GioiTinh, $MSSV) {
+            $query = "INSERT INTO sinhvien (HoTen, GioiTinh, MSSV) VALUES (:HoTen, :GioiTinh, :MSSV)";
+            $stmt = $this -> conn -> prepare($query);
+            $stmt -> bindParam(':HoTen', $HoTen);
+            $stmt -> bindParam(':GioiTinh', $GioiTinh);
+            $stmt -> bindParam(':MSSV', $MSSV);
+            if($stmt -> execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        public function paging ($limit = 5, $offset = 0, $search = ''){
             $query = "SELECT * FROM sinhvien LIMIT :limit OFFSET :offset ";
             $stmt = $this -> conn -> prepare($query);
             $stmt -> bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -39,5 +40,6 @@ class sinhvienModel {
             
             return ['sinhvien' => $result, 'totalPage' => (int) $totalPage];
         }
-}
+    }
+    
 ?>
