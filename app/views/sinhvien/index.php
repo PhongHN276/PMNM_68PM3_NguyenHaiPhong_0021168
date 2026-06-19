@@ -69,6 +69,18 @@
             gap: 5px;
             margin-top: 20px;
         }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .search-input {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +89,14 @@
         
         <a href="<?php echo url('/sinhvien/create'); ?>" class="btn btn-success">+ Thêm sinh viên mới</a>
         <a href="<?php echo url('/auth/logout'); ?>" class="btn btn-danger" style="margin-bottom: 15px; margin-left: 10px;">Đăng xuất</a>
+        <form method="GET" action="<?php echo url('/sinhvien/index'); ?>" class="search-container">
+            <input type="text" name="search" class="search-input" placeholder="Tìm kiếm theo MSSV, Họ tên hoặc Lớp học..." value="<?php echo htmlspecialchars($search ?? ''); ?>">
+            <button type="submit" class="btn">Tìm kiếm</button>
+            <?php if (!empty($search)): ?>
+                <a href="<?php echo url('/sinhvien/index'); ?>" class="btn btn-danger">Hủy tìm</a>
+            <?php endif; ?>
+        </form>
+
         <table>
             <thead>
                 <tr>
@@ -110,10 +130,14 @@
         <div class="pagination">
             <?php
                 $pageSize = 5;
-            for($i =1; $i <= $totalPage; $i++){
-                $offset = ($i - 1) * $pageSize;
-                echo "<a class='btn' href='" . url("/sinhvien/index/$pageSize/$offset") . "'>Trang $i</a>";
-            }
+                for($i = 1; $i <= $totalPage; $i++){
+                    $offset = ($i - 1) * $pageSize;
+                    $pageUrl = url("/sinhvien/index/$pageSize/$offset");
+                    if (!empty($search)) {
+                        $pageUrl .= "?search=" . urlencode($search);
+                    }
+                    echo "<a class='btn' href='$pageUrl'>Trang $i</a>";
+                }
             ?>
         </div>
     </div>
