@@ -6,8 +6,7 @@ class lophoc extends Controller {
         $result = $lophocModel->paging($limit, $offset, $search);
         $lophoc = $result['lophoc'];
         $totalPage = $result['totalPage'];
-        $this->view('lophoc/index', ['lophoc' => $lophoc, 'totalPage' => $totalPage], 'Danh sách lớp học');
-    }
+        $this->view('lophoc/index', ['lophoc' => $lophoc, 'totalPage' => $totalPage, 'limit' => $limit], 'Danh sách lớp học');    }
 
     public function create() {
         $this->view('lophoc/create', [], 'Thêm lớp học');

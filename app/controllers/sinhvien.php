@@ -18,7 +18,8 @@ class sinhvien extends Controller {
             'totalPage' => $totalPage, 
             'search' => $search,
             'sortBy' => $sortBy,
-            'sortOrder' => $sortOrder
+            'sortOrder' => $sortOrder,
+            'limit' => $limit
         ], 'Danh sách sinh viên');    
     }
 

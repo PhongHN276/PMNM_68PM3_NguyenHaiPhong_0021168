@@ -77,6 +77,18 @@
         
         <a href="<?php echo url('/lophoc/create'); ?>" class="btn btn-success">+ Thêm lớp học mới</a>
         <a href="<?php echo url('/auth/logout'); ?>" class="btn btn-danger" style="margin-bottom: 15px; margin-left: 10px;">Đăng xuất</a>
+        <?php $limit = $limit ?? 5; ?>
+        <div style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <label for="pageSize" style="font-weight: 600; font-size: 14px;">Số dòng hiển thị:</label>
+                <select id="pageSize" onchange="changePageSize(this.value)" style="padding: 6px 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px;">
+                    <option value="5" <?php echo $limit == 5 ? 'selected' : ''; ?>>5</option>
+                    <option value="10" <?php echo $limit == 10 ? 'selected' : ''; ?>>10</option>
+                    <option value="20" <?php echo $limit == 20 ? 'selected' : ''; ?>>20</option>
+                    <option value="50" <?php echo $limit == 50 ? 'selected' : ''; ?>>50</option>
+                </select>
+            </div>
+        </div>
 
         <table>
             <thead>
@@ -112,7 +124,7 @@
 
         <div class="pagination">
             <?php
-                $pageSize = 5;
+                $pageSize = $limit;
                 for($i = 1; $i <= $totalPage; $i++){
                     $offset = ($i - 1) * $pageSize;
                     echo "<a class='btn' href='" . url("/lophoc/index/$pageSize/$offset") . "'>Trang $i</a>";
@@ -120,5 +132,10 @@
             ?>
         </div>
     </div>
+    <script>
+    function changePageSize(size) {
+        window.location.href = '<?php echo url("/lophoc/index"); ?>/' + size + '/0';
+    }
+    </script>
 </body>
 </html>
