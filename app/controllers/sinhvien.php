@@ -6,11 +6,20 @@ class sinhvien extends Controller {
         if (isset($_GET['search'])) {
             $search = trim($_GET['search']);
         }
+        $sortBy = isset($_GET['sortBy']) ? trim($_GET['sortBy']) : '';
+        $sortOrder = isset($_GET['sortOrder']) ? trim($_GET['sortOrder']) : '';
+
         $sinhvienModel = $this->model('sinhvienModel');
-        $result = $sinhvienModel -> paging($limit, $offset, $search);
+        $result = $sinhvienModel -> paging($limit, $offset, $search, $sortBy, $sortOrder);
         $sinhvien = $result['sinhvien'];
         $totalPage = $result['totalPage'];
-        $this -> view('sinhvien/index', ['sinhvien' => $sinhvien, 'totalPage' => $totalPage, 'search' => $search], 'Danh sách sinh viên');
+        $this -> view('sinhvien/index', [
+            'sinhvien' => $sinhvien, 
+            'totalPage' => $totalPage, 
+            'search' => $search,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder
+        ], 'Danh sách sinh viên');    
     }
 
     public function create() {

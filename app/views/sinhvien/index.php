@@ -89,8 +89,44 @@
         
         <a href="<?php echo url('/sinhvien/create'); ?>" class="btn btn-success">+ Thêm sinh viên mới</a>
         <a href="<?php echo url('/auth/logout'); ?>" class="btn btn-danger" style="margin-bottom: 15px; margin-left: 10px;">Đăng xuất</a>
+        <?php
+            $sortBy = $sortBy ?? '';
+            $sortOrder = $sortOrder ?? '';
+            
+            // Prepare parameters for headers
+            $nextOrderMSSV = ($sortBy === 'MSSV' && $sortOrder === 'asc') ? 'desc' : 'asc';
+            $nextOrderHoTen = ($sortBy === 'HoTen' && $sortOrder === 'asc') ? 'desc' : 'asc';
+
+            $limit = $limit ?? 5;
+            $offset = $offset ?? 0;
+            
+            $mssvParams = ['sortBy' => 'MSSV', 'sortOrder' => $nextOrderMSSV];
+            $hotenParams = ['sortBy' => 'HoTen', 'sortOrder' => $nextOrderHoTen];
+            
+            if (!empty($search)) {
+                $mssvParams['search'] = $search;
+                $hotenParams['search'] = $search;
+            }
+            
+            $mssvUrl = url("/sinhvien/index/$limit/$offset") . '?' . http_build_query($mssvParams);
+            $hotenUrl = url("/sinhvien/index/$limit/$offset") . '?' . http_build_query($hotenParams);
+            
+            $mssvIndicator = '';
+            if ($sortBy === 'MSSV') {
+                $mssvIndicator = $sortOrder === 'asc' ? ' ▲' : ' ▼';
+            }
+            
+            $hotenIndicator = '';
+            if ($sortBy === 'HoTen') {
+                $hotenIndicator = $sortOrder === 'asc' ? ' ▲' : ' ▼';
+            }
+        ?>
         <form method="GET" action="<?php echo url('/sinhvien/index'); ?>" class="search-container">
             <input type="text" name="search" class="search-input" placeholder="Tìm kiếm theo MSSV, Họ tên hoặc Lớp học..." value="<?php echo htmlspecialchars($search ?? ''); ?>">
+            <?php if (!empty($sortBy)): ?>
+                <input type="hidden" name="sortBy" value="<?php echo htmlspecialchars($sortBy); ?>">
+                <input type="hidden" name="sortOrder" value="<?php echo htmlspecialchars($sortOrder); ?>">
+            <?php endif; ?>
             <button type="submit" class="btn">Tìm kiếm</button>
             <?php if (!empty($search)): ?>
                 <a href="<?php echo url('/sinhvien/index'); ?>" class="btn btn-danger">Hủy tìm</a>
@@ -101,8 +137,8 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>MSSV</th>
-                    <th>Họ tên</th>
+                    <th><a href="<?php echo $mssvUrl; ?>" style="text-decoration: none; color: inherit;">MSSV<?php echo $mssvIndicator; ?></a></th>
+                    <th><a href="<?php echo $hotenUrl; ?>" style="text-decoration: none; color: inherit;">Họ tên<?php echo $hotenIndicator; ?></a></th>
                     <th>Giới tính</th>
                     <th>Lớp</th>
                     <th>Thao tác</th>
@@ -133,9 +169,16 @@
                 for($i = 1; $i <= $totalPage; $i++){
                     $offset = ($i - 1) * $pageSize;
                     $pageUrl = url("/sinhvien/index/$pageSize/$offset");
+                    $queryParams = [];
                     if (!empty($search)) {
-                        $pageUrl .= "?search=" . urlencode($search);
+                        $queryParams['search'] = $search;
                     }
+                    if (!empty($sortBy)) {
+                        $queryParams['sortBy'] = $sortBy;
+                        $queryParams['sortOrder'] = $sortOrder;
+                    }
+                    if (!empty($queryParams)) {
+                        $pageUrl .= "?" . http_build_query($queryParams);                    }
                     echo "<a class='btn' href='$pageUrl'>Trang $i</a>";
                 }
             ?>
