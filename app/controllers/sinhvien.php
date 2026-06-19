@@ -17,15 +17,22 @@ class sinhvien extends Controller {
     }
 
     public function create() {
-         $this->view('sinhvien/create', [], 'Thêm sinh viên');
+        $lophocModel = $this->model('lophocModel');
+        $classes = $lophocModel->getAllLophoc();
+        $this->view('sinhvien/create', ['classes' => $classes], 'Thêm sinh viên');
     }
 
     public function store() {
         $hoten = $_POST['hoten'] ?? '';
         $gioitinh = $_POST['gioitinh'] ?? '';
         $mssv = $_POST['mssv'] ?? '';
+            $MaLop = $_POST['MaLop'] ?? null;
+            if ($MaLop === '') {
+                $MaLop = null;
+            }
 
-        $result = $this->model('sinhvienModel')->create($hoten, $gioitinh, $mssv);
+        $sinhvienModel = $this->model('sinhvienModel');
+        $result = $sinhvienModel->create($HoTen, $GioiTinh, $MSSV, $MaLop);
         if ($result) {
             header('Location: /sinhvien/index');
             exit();
@@ -38,9 +45,10 @@ class sinhvien extends Controller {
     public function edit($id) {
         $sinhvienModel = $this->model('sinhvienModel');
         $sinhvien = $sinhvienModel->getSinhvienById($id);
+        $lophocModel = $this->model('lophocModel');
+        $classes = $lophocModel->getAllLophoc();
         if ($sinhvien) {
-            $this->view('sinhvien/edit', ['sinhvien' => $sinhvien], 'Sửa sinh viên');
-        } else {
+            $this->view('sinhvien/edit', ['sinhvien' => $sinhvien, 'classes' => $classes], 'Sửa sinh viên');        } else {
             echo "Không tìm thấy sinh viên!";
         }
     }
@@ -50,10 +58,13 @@ class sinhvien extends Controller {
             $HoTen = $_POST['HoTen'] ?? '';
             $GioiTinh = $_POST['GioiTinh'] ?? '';
             $MSSV = $_POST['MSSV'] ?? '';
+            $MaLop = $_POST['MaLop'] ?? null;
+            if ($MaLop === '') {
+                $MaLop = null;
+            }
 
             $sinhvienModel = $this->model('sinhvienModel');
-            $result = $sinhvienModel->update($id, $HoTen, $GioiTinh, $MSSV);
-            if ($result) {
+            $result = $sinhvienModel->update($id, $HoTen, $GioiTinh, $MSSV, $MaLop);            if ($result) {
                 header('Location: ' . url('/sinhvien/index'));
                 exit();
             } else {

@@ -91,6 +91,18 @@
                     <option value="Khác">Khác</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="MaLop">Lớp học:</label>
+                <select id="MaLop" name="MaLop">
+                    <option value="">Chọn lớp học (nếu có)</option>
+                    <?php foreach ($classes as $class): ?>
+                        <option value="<?php echo htmlspecialchars($class['MaLop']); ?>">
+                            <?php echo htmlspecialchars($class['MaLop'] . ' - ' . $class['TenLop']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <input type="submit" value="Thêm sinh viên">
             <a href="<?php echo url('/sinhvien/index'); ?>" class="btn-back">Quay lại danh sách</a>
         </form>

@@ -91,6 +91,17 @@
                     <option value="Khác" <?php echo $sinhvien['GioiTinh'] === 'Khác' ? 'selected' : ''; ?>>Khác</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="MaLop">Lớp học:</label>
+                <select id="MaLop" name="MaLop">
+                    <option value="">Chọn lớp học (nếu có)</option>
+                    <?php foreach ($classes as $class): ?>
+                        <option value="<?php echo htmlspecialchars($class['MaLop']); ?>" <?php echo $sinhvien['MaLop'] === $class['MaLop'] ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($class['MaLop'] . ' - ' . $class['TenLop']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
             <input type="submit" value="Cập nhật">
             <a href="<?php echo url('/sinhvien/index'); ?>" class="btn-back">Quay lại danh sách</a>

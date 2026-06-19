@@ -84,6 +84,7 @@
                     <th>MSSV</th>
                     <th>Họ tên</th>
                     <th>Giới tính</th>
+                    <th>Lớp</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -94,6 +95,7 @@
                         <td><?php echo htmlspecialchars($sv['MSSV']); ?></td>
                         <td><?php echo htmlspecialchars($sv['HoTen']); ?></td>
                         <td><?php echo htmlspecialchars($sv['GioiTinh']); ?></td>
+                        <td><?php echo htmlspecialchars($sv['MaLop'] ?? 'Chưa xếp lớp'); ?></td>
                         <td> 
                             <div class="action-btns">
                                 <a href="<?php echo url('/sinhvien/edit/' . $sv['id']); ?>" class="btn btn-warning">Sửa</a>
